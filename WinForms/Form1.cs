@@ -22,6 +22,10 @@ namespace WinForms
         public Form1()
         {
             InitializeComponent();
+            b1.X = 10; b1.Y = -10;
+            b2.X = b2.Y = -10;
+            b3.X = -10; b3.Y = 10;
+            b4.X = b4.Y = 10;
         }
         
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -37,15 +41,7 @@ namespace WinForms
             }
         }
 
-        private void Form1_Click(object sender, EventArgs e)
-        {
-            b1.X = 10; b1.Y = -10;
-            b2.X = b2.Y = -10;
-            b3.X = b3.Y = 10;
-            b4.X = b4.Y = 10;
-
-            timer1.Enabled = true;
-        }
+        
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -72,7 +68,42 @@ namespace WinForms
                 b2.Y = b2.X = -10;
             if (button2.Location.Y > curposY - button2.Size.Height)
                 b2.Y = -10;
+
+            button3.Location = new Point(
+               button3.Location.X + b3.X,
+                button3.Location.Y + b3.Y);
+            if (button3.Location.X < 0)
+                b3.X = 10;
+            if (button3.Location.Y < curposY)
+                b3.Y = 10;
+            if (button3.Location.X > curposX)
+                b3.X = -10;
+            if (button3.Location.Y > this.ClientSize.Height - button3.Height)
+                b3.Y = -10;
+
+            button4.Location = new Point(
+               button4.Location.X + b4.X,
+                button4.Location.Y + b4.Y);
+            if (button4.Location.X < curposX)
+                b4.X = 10;
+            if (button4.Location.Y < curposY)
+                b4.Y = 10;
+            if (button4.Location.X > this.ClientSize.Width - button4.Width)
+                b4.X = -10;
+            if (button4.Location.Y > this.ClientSize.Height - button4.Height)
+                b4.Y = -10;
         }
 
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                timer1.Enabled = false;
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                timer1.Enabled = true;
+            }
+        }
     }
 }
